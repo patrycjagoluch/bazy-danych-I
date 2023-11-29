@@ -1,0 +1,18 @@
+https://tinyurl.com/bdcwi6
+
+zad. 1
+id_produktu-> nazwa_produktu, cena_produktu, VAT
+nazwa_produktu-> id_produktu, cena, VAT, 
+suma_brutto, suma_netto (sumuje wszystkie brutto i vat zeby. zeby policzyc sume brutto, trzeba znac netto i vat.
+suma netto, vat -> suma_brutto
+id_klienta -> nazwa_klienta
+nazwa_klienta -> id_klienta
+
+zad. 2 id_produktu, id_klienta
+
+zad. 3 
+id_pomieszczenia -> numer_pomieszczenia, id_budynku, powierzchnia, liczba_okien, liczba_drzwi, ulica, miasto, kod_pocztowy
+id_budynku -> ulica, miasto, kod_pocztowy
+kod_pocztowy -> miasto
+
+klucze kandydujące: id_pomieszczenia, id_budynku

@@ -1,0 +1,42 @@
+CZĘŚĆ B
+ ALTER TABLE ksiegowosc.pensje
+ ALTER COLUMN kwota TYPE TEXT
+ 
+ ALTER TABLE ksiegowosc.pracownicy
+ ALTER COLUMN telefon TYPE TEXT;
+ 
+UPDATE ksiegowosc.pracownicy             --a)
+SET telefon = CONCAT('(+48) ', telefon); -- concat laczy dwa stringi
+
+UPDATE ksiegowosc.pracownicy    --b)
+SET telefon = substr(telefon, 1, 3) || '-' || substr(telefon, 4, 3) || '-' || substr(telefon, 7)
+WHERE telefon IS NOT NULL;
+
+SELECT telefon
+FROM ksiegowosc.pracownicy;
+ 
+ SELECT MAX (nazwisko) --c) 
+ FROM ksiegowosc.pracownicy;
+
+ SELECT p.id_pracownika, MD5(imie),MD5(nazwisko), MD5(adres), MD5(s.kwota) -- d) 
+ FROM ksiegowosc.pracownicy p
+ INNER JOIN  ksiegowosc.wynagrodzenie w ON p.id_pracownika =w.id_pracownika
+ INNER JOIN ksiegowosc.pensje s ON w.id_pensji = s.id_pensji;
+
+SELECT p.id_pracownika, s.kwota, r.kwota  -- f) 
+FROM ksiegowosc.pracownicy p
+LEFT JOIN ksiegowosc.wynagrodzenie i ON p.id_pracownika = i.id_pracownika
+LEFT JOIN ksiegowosc.pensje s ON i.id_pensji = s.id_pensji
+LEFT JOIN ksiegowosc.premie r ON i.id_premii= r.id_premii
+ORDER BY p.id_pracownika;
+
+SELECT p.imie, p.nazwisko, dataa,     -- g)
+  SUM(s.kwota + r.kwota + i.nadgodziny) AS całkowita_kwota,
+  s.kwota AS wynagrodzenie, r.kwota AS premia, i.nadgodziny,
+  CONCAT_WS(' ', 'Pracownik', p.imie, p.nazwisko, 'w dniu', TO_CHAR(dataa, 'DD.MM.YYYY'),
+            'otrzymał pensję całkowitą na kwotę', całkowita_kwota, 'zł, gdzie wynagrodzenie zasadnicze wynosiło:',
+            wynagrodzenie, 'zł, premia:', premia, 'zł, nadgodziny:', nadgodziny, 'zł') AS raport
+FROM ksiegowosc.pracownicy p
+INNER JOIN ksiegowosc.wynagrodzenie i ON p.id_pracownika = i.id_pracownika
+INNER JOIN ksiegowosc.pensje s ON i.id_pensji = s.id_pensji
+INNER JOIN ksiegowosc.premie r ON i.id_premii = r.id_premii;
