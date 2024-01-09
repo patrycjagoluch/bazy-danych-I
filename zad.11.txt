@@ -1,0 +1,9 @@
+zad.1
+A) Wykonanie zapytania podczas gdy istnieje klucz głowny:
+
+- czas wykonywania jest krótszy, ponieważ wyszukiwanie działa szybciej
+- koszty operacji I/O i CPU są mniejsze, ponieważ dane są zoptymalizowane i łatwiej je wyszukiwać
+- ilość wierszy do wczytania jest mniejsza, ponieważ rekordy są uporządkowane.
+w porównaniu gdy w tabeli nie ma klucza głównego
+
+B) AND pokazuje rekordy, gdzie oba warunki są spełnione, natomiast OR gdy conajmniej jeden z nich
